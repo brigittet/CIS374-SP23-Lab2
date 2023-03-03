@@ -153,7 +153,11 @@ namespace Lab2
         /// </summary>
         public void Update(T oldValue, T newValue)
         {
-            if (array.Contains(oldValue))
+            if (array.Contains(oldValue) == false)
+            {
+                throw new Exception();
+            }
+            else
             {
                 int i = 0;
                 while (array[i].CompareTo(oldValue) != 0)
@@ -169,10 +173,6 @@ namespace Lab2
                 {
                     TrickleUp(i);
                 }
-            }
-            else
-            {
-                throw new Exception();
             }
         }
 
@@ -225,9 +225,9 @@ namespace Lab2
         // Time Complexity: O( log(n) )
         private void TrickleDown(int index)
         {
-            if (RightChild(index) > Count - 1)
+            if (RightChild(index) > (Count - 1))
             {
-                if (LeftChild(index) > Count - 1)
+                if (LeftChild(index) > (Count - 1))
                 {
                     return;
                 }
@@ -244,9 +244,9 @@ namespace Lab2
                     }
                 }
             }
-            if (LeftChild(index) > Count - 1)
+            else if (LeftChild(index) > (Count - 1))
             {
-                if (RightChild(index) > Count - 1)
+                if (RightChild(index) > (Count - 1))
                 {
                     return;
                 }

@@ -226,9 +226,9 @@ namespace Lab2
         // Time Complexity: O( log(n) )
         private void TrickleDown(int index)
         {
-            if (RightChild(index) > Count - 1)
+            if (RightChild(index) > (Count - 1))
             {
-                if (LeftChild(index) > Count - 1)
+                if (LeftChild(index) > (Count - 1))
                 {
                     return;
                 }
@@ -245,9 +245,9 @@ namespace Lab2
                     }
                 }
             }
-            if (LeftChild(index) > Count - 1)
+            else if (LeftChild(index) > (Count - 1))
             {
-                if (RightChild(index) > Count - 1)
+                if (RightChild(index) > (Count - 1))
                 {
                     return;
                 }
