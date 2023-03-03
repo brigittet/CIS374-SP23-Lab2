@@ -33,7 +33,7 @@ namespace Lab2
 
         /// <summary>
         /// Returns the min item but does NOT remove it.
-        /// Time complexity: O(?)
+        /// Time complexity: O(1)
         /// </summary>
         public T Peek()
         {
@@ -48,7 +48,7 @@ namespace Lab2
         // TODO
         /// <summary>
         /// Adds given item to the heap.
-        /// Time complexity: O(?)
+        /// Time complexity: O(log(n))
         /// </summary>
         public void Add(T item)
         {
@@ -81,7 +81,20 @@ namespace Lab2
         public T ExtractMax()
         {
             // linear search
-
+            var max = 0;
+            var i = 0;
+            while (i < Count)
+            {
+                if (array[i].CompareTo(array[max]) > 0)
+                {
+                    max = i;
+                }
+                i++;
+            }
+            Swap(max, Count - 1);
+            Count--;
+            TrickleDown(max);
+            return array[max];
             // remove max
 
         }
@@ -136,24 +149,55 @@ namespace Lab2
         // TODO
         /// <summary>
         /// Updates the first element with the given value from the heap.
-        /// Time complexity: O( ? )
+        /// Time complexity: O( N )
         /// </summary>
         public void Update(T oldValue, T newValue)
         {
-
-
-
+            if (array.Contains(oldValue))
+            {
+                int i = 0;
+                while (array[i].CompareTo(oldValue) != 0)
+                {
+                    i++;
+                }
+                array[i] = newValue;
+                if (newValue.CompareTo(oldValue) > 0)
+                {
+                    TrickleDown(i);
+                }
+                else
+                {
+                    TrickleUp(i);
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
         }
 
         // TODO
         /// <summary>
         /// Removes the first element with the given value from the heap.
-        /// Time complexity: O( ? )
+        /// Time complexity: O( N )
         /// </summary>
         public void Remove(T value)
         {
-
-
+            if (array.Contains(value))
+            {
+                int i = 0;
+                while (array[i].CompareTo(value) != 0)
+                {
+                    i++;
+                }
+                Swap(i, Count - 1);
+                Count--;
+                TrickleDown(i);
+            }
+            else
+            {
+                throw new Exception();
+            }
 
         }
 
@@ -161,7 +205,19 @@ namespace Lab2
         // Time Complexity: O( log(n) )
         private void TrickleUp(int index)
         {
-
+            if (index == 0)
+            {
+                return;
+            }
+            else if (array[index].CompareTo(array[Parent(index)]) > 0)
+            {
+                return;
+            }
+            else if (array[index].CompareTo(array[Parent(index)]) < 0)
+            {
+                Swap(index, Parent(index));
+                TrickleUp(Parent(index));
+            }
 
         }
 
@@ -169,7 +225,42 @@ namespace Lab2
         // Time Complexity: O( log(n) )
         private void TrickleDown(int index)
         {
-
+            if (RightChild(index) > Count - 1)
+            {
+                if (LeftChild(index) > Count - 1)
+                {
+                    return;
+                }
+                else
+                {
+                    if (array[index].CompareTo(array[LeftChild(index)]) < 0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        Swap(index, LeftChild(index));
+                        TrickleDown(LeftChild(index));
+                    }
+                }
+            }
+            else
+            {
+                if (array[index].CompareTo(array[RightChild(index)]) < 0)
+                {
+                    if (array[index].CompareTo(array[LeftChild(index)]) > 0)
+                    {
+                        Swap(index, LeftChild(index));
+                        TrickleDown(LeftChild(index));
+                    }
+                    return;
+                }
+                else
+                {
+                    Swap(index, RightChild(index));
+                    TrickleDown(RightChild(index));
+                }
+            }
         }
 
         // TODO
@@ -178,7 +269,8 @@ namespace Lab2
         /// </summary>
         private static int Parent(int position)
         {
-
+            int parent = (position - 1) / 2;
+            return parent;
         }
 
         // TODO
@@ -187,6 +279,8 @@ namespace Lab2
         /// </summary>
         private static int LeftChild(int position)
         {
+            int lchild = (2 * position) + 1;
+            return lchild;
         }
 
         // TODO
@@ -195,6 +289,8 @@ namespace Lab2
         /// </summary>
         private static int RightChild(int position)
         {
+            int rchild = (2 * position) + 2;
+            return rchild;
         }
 
         private void Swap(int index1, int index2)
