@@ -151,6 +151,10 @@ namespace Lab2
         /// </summary>
         public void Update(T oldValue, T newValue)
         {
+            if (IsEmpty)
+            {
+                throw new Exception("Empty Heap");
+            }
 
             if (array.Contains(oldValue))
             {
@@ -183,6 +187,10 @@ namespace Lab2
         /// </summary>
         public void Remove(T value)
         {
+            if (IsEmpty)
+            {
+                throw new Exception("Empty Heap");
+            }
 
             if (array.Contains(value))
             {
