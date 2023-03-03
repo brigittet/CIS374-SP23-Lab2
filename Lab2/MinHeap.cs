@@ -244,6 +244,25 @@ namespace Lab2
                     }
                 }
             }
+            if (LeftChild(index) > Count - 1)
+            {
+                if (RightChild(index) > Count - 1)
+                {
+                    return;
+                }
+                else
+                {
+                    if (array[index].CompareTo(array[RightChild(index)]) < 0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        Swap(index, RightChild(index));
+                        TrickleDown(RightChild(index));
+                    }
+                }
+            }
             else
             {
                 if (array[index].CompareTo(array[RightChild(index)]) < 0)
@@ -253,12 +272,35 @@ namespace Lab2
                         Swap(index, LeftChild(index));
                         TrickleDown(LeftChild(index));
                     }
-                    return;
+                    else
+                    {
+                        return;
+                    }
+                }
+                else if (array[index].CompareTo(array[LeftChild(index)]) < 0)
+                {
+                    if (array[index].CompareTo(array[RightChild(index)]) > 0)
+                    {
+                        Swap(index, RightChild(index));
+                        TrickleDown(RightChild(index));
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
                 else
                 {
-                    Swap(index, RightChild(index));
-                    TrickleDown(RightChild(index));
+                    if (array[RightChild(index)].CompareTo(array[LeftChild(index)]) < 0)
+                    {
+                        Swap(index, RightChild(index));
+                        TrickleDown(RightChild(index));
+                    }
+                    else if (array[RightChild(index)].CompareTo(array[LeftChild(index)]) > 0)
+                    {
+                        Swap(index, LeftChild(index));
+                        TrickleDown(LeftChild(index));
+                    }
                 }
             }
         }
